@@ -1,6 +1,7 @@
 package com.mjamsek.file.resources;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @RequestScoped
 @Path("/files")
@@ -24,11 +26,13 @@ public class FileResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadFile(
-        @FormDataParam("file") InputStream fileInputStream,
-        @FormDataParam("file") FormDataContentDisposition fileMetadata
+        @FormDataParam("file") List<FormDataBodyPart> body
     ) {
-        System.out.println("Received file with name: " + fileMetadata.getFileName());
-        this.saveFile(fileInputStream, fileMetadata.getFileName());
+        for (FormDataBodyPart part : body) {
+            ContentDisposition fileMetadata = part.getContentDisposition();
+            InputStream fileContent = part.getEntityAs(InputStream.class);
+            this.saveFile(fileContent, fileMetadata.getFileName());
+        }
         return Response.ok().build();
     }
     
