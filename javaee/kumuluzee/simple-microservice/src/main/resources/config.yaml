@@ -1,0 +1,15 @@
+kumuluzee:
+  env:
+    name: dev
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/mainDB
+  datasources:
+    - jndi-name: jdbc/mainDB
+      connection-url: jdbc:postgresql://localhost:5432/sample-project
+      username: not_set
+      password: not_set
