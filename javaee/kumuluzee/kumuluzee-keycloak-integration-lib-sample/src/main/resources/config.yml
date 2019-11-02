@@ -1,0 +1,11 @@
+kumuluzee:
+  name: sample-app
+kc:
+  realm: mjamsek-test
+  auth-server-url: https://keycloak.mjamsek.com/auth
+  client-id: keycloak-lib-client
+  auth:
+    client-secret: set_secret_from_keycloak
+  claims:
+    username: preferred_username
+    email: email
