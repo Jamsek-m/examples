@@ -1,39 +1,36 @@
 package com.mjamsek.auth.service;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
+import com.mjamsek.auth.keycloak.client.KeycloakClient;
 import com.mjamsek.auth.keycloak.exceptions.KeycloakException;
-import com.mjamsek.auth.keycloak.services.KeycloakClient;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.JsonArray;
 import java.net.URI;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 public class AccountService {
     
-    private static final Logger log = Logger.getLogger(AccountService.class.getName());
-    
     private AccountAPI api;
-    
-    private String realm;
     
     @PostConstruct
     private void init() {
-        this.realm = ConfigurationUtil.getInstance().get("kc.realm").orElse("not-set");
-        String serverUrl = ConfigurationUtil.getInstance().get("kc.auth-server-url").orElse("not-set");
-        api = RestClientBuilder.newBuilder()
-            .baseUri(URI.create(serverUrl))
-            .build(AccountAPI.class);
+        api = ConfigurationUtil.getInstance().get("keycloak.auth-server-url").map(keycloakUrl -> {
+            return RestClientBuilder
+                .newBuilder()
+                .baseUri(URI.create(keycloakUrl))
+                .build(AccountAPI.class);
+        }).orElseThrow();
     }
     
     public JsonArray getAccounts() {
         try {
-            JsonArray resultArray = KeycloakClient.callKeycloak((token) -> api.getAccounts(realm, "Bearer " + token));
-            log.info("Received response array of size: " + resultArray.size());
-            return resultArray;
+            String realm = ConfigurationUtil.getInstance().get("keycloak.realm").orElseThrow();
+            return KeycloakClient.callKeycloak((token) -> {
+                return api.getAccounts(realm, "Bearer " + token);
+            });
         } catch (KeycloakException e) {
             e.printStackTrace();
             return null;

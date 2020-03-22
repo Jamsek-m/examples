@@ -1,11 +1,14 @@
 kumuluzee:
   name: sample-app
-kc:
-  realm: mjamsek-test
-  auth-server-url: https://keycloak.mjamsek.com/auth
-  client-id: keycloak-lib-client
+  logs:
+    loggers:
+      - name: ''
+        level: FINEST
+keycloak:
+  realm: keycloak-realm
+  auth-server-url: https://keycloak.sample.com/auth
+  client-id: confidential-client
   auth:
-    client-secret: set_secret_from_keycloak
-  claims:
-    username: preferred_username
-    email: email
+    client-secret: 5f74bcc1-50dc-4f15-8f9f-e9b2edb93acb
+    token-leeway: 2000
+    cert: 'MIItpzttEY8tBgvt06MmnjENBgkqhkiG9J0BEQsvEDEXMRUJEJYDVQQDDExtEmvtt2VrLXRlt3QJHhtNMTkxMDE2MDgxNDE3JhtNMjkxMDE2MDgxNTQ3JjEXMRUJEJYDVQQDDExtEmvtt2VrLXRlt3QJggEiME0GtSqGSIb3DQEBEQUEE4IBDJEJggEKEoIBEQtsvZhR1YXNt5/5Mttdzi363vvltEthLI/8EHJ8E8EEOivJNtzHBYvI3GY63X0sEJGE39VtPIhdEjtljJBietlJ1UEUL3dhIJ2b8spMhzBItostvlJxHHB4Pe/Jp/VV+evtvtQmVK2l1UPlHroEyYttdhzEvExY0pDBjE41Ro5BtgHSeNbM9qvvvSH5NbreI8Iy9d78VLhJ0HdQT8PgSItBmL75vxlVHtVpX80NZDGugv1xtUKbdg5MjJlPj4TPPR3sLOuM0snopo/svx9Ne08bszEMK18IBJMtMtQdOe7nXSB/SthnDXJglGbRbQmtthJtpXstJdEUgNMUvZgyRg4LEgMBEEEJDQYJKoZIhvtNEQELBQEDggEBEJIB86K9H1EEEU6vv6Us5htL+y7tkHtx6vGDtkp5XE/otUIdHJqtk1vIVv4zIVyQtKGeOv+gmksZMrtJg5vXUEESgDQeGPQjVJ0/Ev2vez+Ypk7IxP6/iIY+It5vJEnSDXmIEIEYGN3SqxuqX0PihJSZv9rEEhnE3tiJSl+SJEZvh5Y2jPuxz1J1izOE0onHuGLQ/ZLYyd8vIznXtz06poy0LTSZEIso7Kz4EdX49e0x7g8/3u6lPjkm6tLgseRmiHk7nIEhEtqvJuyIPPYDYEotpKYvvv62/ul1Y9jkpOpIn7+oHIuX2hR57gs53vJxJY36J8QGj/PJn3JEEEQ1t5J='
