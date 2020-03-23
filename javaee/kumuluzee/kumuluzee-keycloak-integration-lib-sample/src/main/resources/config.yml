@@ -4,6 +4,8 @@ kumuluzee:
     loggers:
       - name: ''
         level: FINEST
+  rest-client:
+    disable-jetty-www-auth: true
 keycloak:
   realm: keycloak-realm
   auth-server-url: https://keycloak.sample.com/auth
