@@ -1,18 +1,20 @@
 package com.mjamsek.file;
 
-import com.mjamsek.file.resources.FileResource;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.HashMap;
+import java.util.Map;
 
 @ApplicationPath("/")
-public class FileApplication extends ResourceConfig {
+public class FileApplication extends Application {
     
-    public FileApplication() {
-        // register jersey's multipart feature - required for file upload
-        register(MultiPartFeature.class);
-        // register our endpoint
-        register(FileResource.class);
+    @Override
+    public Map<String, Object> getProperties() {
+        Map<String, Object> props = new HashMap<>();
+        
+        props.put("jersey.config.server.provider.classnames", "org.glassfish.jersey.media.multipart.MultiPartFeature");
+        
+        return props;
     }
+    
 }

@@ -1,4 +1,4 @@
-package com.mjamsek.file.resources;
+package com.mjamsek.file.endpoints;
 
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
